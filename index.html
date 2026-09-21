@@ -3,21 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfólio profissional de Luís Ferreira, estudante de Sistemas de Informação e estagiário em TI.">
   <title>Luís Ferreira</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="img/icon.jpeg" type="image/jpeg">
+  <link rel="icon" href="img/icon.jpeg" type="image/jpeg">
 </head>
-<body>
 
+<body>
   <!-- CABEÇALHO E NAVEGAÇÃO -->
   <header id="site-header">
-    <nav aria-label="Menu principal">
+    <nav class="site-nav" aria-label="Menu principal">
       <a href="https://www.instagram.com/luisferreira_10/" target="_blank" rel="noopener" class="nav-logo">@luisferreira_10 ↗</a>
-      <ul>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="main-menu">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
+
+      <ul id="main-menu" class="main-menu">
         <li><a href="#sobre"><span class="n">01.</span> Sobre</a></li>
         <li><a href="#experiencia"><span class="n">02.</span> Experiência</a></li>
         <li><a href="#projetos"><span class="n">03.</span> Projetos</a></li>
@@ -29,76 +41,96 @@
 
   <!-- CONTEÚDO PRINCIPAL -->
   <main>
-
     <!-- HERO -->
     <section id="hero" aria-label="Apresentação">
-      <div class="wrap">
+      <article class="wrap">
         <p class="hero-eyebrow">Olá, eu sou</p>
         <h1>Luís Ferreira<span class="cursor" aria-hidden="true"></span></h1>
+
         <p class="hero-desc">
-          Estudante de <em>Sistemas de Informação</em>, estagiário em TI, focado 
+          Estudante de <em>Sistemas de Informação</em>, estagiário em TI, focado
           em banco de dados e desenvolvimento web — construindo e aprendendo
           com cada projeto.
         </p>
-        <div class="ctas">
-          <a href="#projetos" class="btn btn-fill">Ver projetos</a>
-          <a href="https://www.linkedin.com/in/luisgmferreira/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn ↗</a>
-        </div>
-      </div>
+
+        <nav class="ctas" aria-label="Ações principais">
+          <a
+            href="https://github.com/luisferreiira"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-fill">
+            Ver projetos <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/luisgmferreira/"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-outline">
+            LinkedIn ↗
+          </a>
+        </nav>
+      </article>
     </section>
 
     <!-- SOBRE -->
     <section id="sobre">
-      <div class="wrap">
+      <article class="wrap">
         <p class="sec-label">01 — sobre</p>
         <h2>Quem sou</h2>
+
         <p>
           Sou estudante de <em>Sistemas de Informação</em> no IFSULDEMINAS – Campus Machado,
           formado como Técnico em Informática. Tenho interesse especial em
           <em>modelagem de banco de dados</em> e desenvolvimento web, e busco constantemente
           unir conhecimento técnico com visão de negócios.
         </p>
+
         <p>
           Atualmente estagio na <em>Axtelecom</em>, provedora de internet local, onde atuo
           com diagnóstico de conectividade e já participei de um processo de migração de
           sistema legado — apoiando análise de dados e identificação de inconsistências
           durante a transição.
         </p>
+
         <p>
           Participo ativamente dos eventos de tecnologia do campus, como
           <em>Jornada da Computação</em> e <em>Dias da Computação</em>, e mantenho
           uma rotina de aprendizado contínuo fora da sala de aula.
         </p>
-      </div>
+      </article>
     </section>
 
     <!-- EXPERIÊNCIA -->
     <section id="experiencia">
-      <div class="wrap">
+      <article class="wrap">
         <p class="sec-label">02 — experiência</p>
         <h2>Onde atuei</h2>
+
         <ul class="exp-list">
           <li>
             <article class="exp-item">
               <time datetime="2025-02">fev 2025<br>— o momento</time>
-              <div>
+
+              <section class="exp-content">
                 <h3>Estagiário de Suporte Técnico</h3>
                 <p class="exp-company">Axtelecom</p>
+
                 <ul class="exp-bullets">
                   <li>Help desk com foco em internet para clientes residenciais e empresariais</li>
                   <li>Diagnóstico de problemas de conectividade, lentidão e oscilação com análise de equipamentos de rede</li>
                   <li>Participação no processo de migração de sistema legado, apoiando a gerência na análise de dados e identificação de erros durante a transição</li>
                 </ul>
-              </div>
+              </section>
             </article>
           </li>
         </ul>
-      </div>
+      </article>
     </section>
 
     <!-- PROJETOS -->
     <section id="projetos">
-      <div class="wrap">
+      <article class="wrap">
         <p class="sec-label">03 — projetos</p>
         <h2>O que construí</h2>
 
@@ -106,26 +138,32 @@
         <article class="proj-feat">
           <p class="proj-overline">Java · Maven</p>
           <h3>Parque de Diversões</h3>
+
           <p class="proj-desc">
             Sistema completo de gestão para parque de diversões desenvolvido em Java com Maven.
             Inclui cadastro de visitantes, simulação de compra de ingressos, controle de atrações
             disponíveis e geração de relatórios — aplicando orientação a objetos e estruturação
             de pacotes em um contexto de negócio real.
           </p>
+
           <ul class="proj-tech">
             <li>Java</li>
             <li>Maven</li>
             <li>OOP</li>
             <li>Relatórios</li>
           </ul>
-          <a href="https://github.com/luisferreiira/LuisFerreira3infoH" target="_blank" rel="noopener" class="proj-link">
+
+          <a
+            href="https://github.com/luisferreiira/LuisFerreira3infoH"
+            target="_blank"
+            rel="noopener"
+            class="proj-link">
             GitHub ↗
           </a>
         </article>
 
         <!-- Grade de projetos -->
         <ul class="proj-small-grid">
-
           <li>
             <article class="proj-small">
               <header>
@@ -221,16 +259,16 @@
               </ul>
             </article>
           </li>
-
         </ul>
-      </div>
+      </article>
     </section>
 
     <!-- HABILIDADES -->
     <section id="habilidades">
-      <div class="wrap">
+      <article class="wrap">
         <p class="sec-label">04 — habilidades</p>
         <h2>Tecnologias</h2>
+
         <ul class="skills-cols">
           <li>
             <h3>Frontend</h3>
@@ -239,6 +277,7 @@
               <li>CSS</li>
             </ul>
           </li>
+
           <li>
             <h3>Programação</h3>
             <ul class="sb-tags">
@@ -249,6 +288,7 @@
               <li>Flutter</li>
             </ul>
           </li>
+
           <li>
             <h3>Banco de Dados</h3>
             <ul class="sb-tags">
@@ -256,6 +296,7 @@
               <li>Modelagem Relacional</li>
             </ul>
           </li>
+
           <li>
             <h3>Ferramentas</h3>
             <ul class="sb-tags">
@@ -265,137 +306,149 @@
             </ul>
           </li>
         </ul>
-      </div>
+      </article>
     </section>
 
     <!-- CERTIFICAÇÕES -->
     <section id="certificacoes">
-      <div class="wrap">
+      <article class="wrap">
         <h2>Certificações</h2>
+
         <ul class="certs">
           <li>
             <article class="cert">
-              <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
-              <div>
+              <i class="fa-solid fa-mug-hot cert-ico" aria-hidden="true"></i>
+              <header class="cert-info">
                 <h3>Java exceções: aprenda a criar, lançar e controlar exceções</h3>
                 <p class="cert-meta">Alura · set 2026</p>
-              </div>
+              </header>
               <span class="cert-pill">Alura</span>
             </article>
           </li>
+
           <li>
             <article class="cert">
-              <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
-              <div>
+              <i class="fa-solid fa-mug-hot cert-ico" aria-hidden="true"></i>
+              <header class="cert-info">
                 <h3>Java: criando sua primeira API e conectando ao front</h3>
                 <p class="cert-meta">Alura · set 2026</p>
-              </div>
+              </header>
               <span class="cert-pill">Alura</span>
             </article>
           </li>
+
           <li>
             <article class="cert">
-              <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
-              <div>
+              <i class="fa-solid fa-mug-hot cert-ico" aria-hidden="true"></i>
+              <header class="cert-info">
                 <h3>Java: persistência de dados e consultas com Spring Data JPA</h3>
                 <p class="cert-meta">Alura · set 2026</p>
-              </div>
+              </header>
               <span class="cert-pill">Alura</span>
             </article>
           </li>
+
           <li>
             <article class="cert">
-              <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
-              <div>
+              <i class="fa-solid fa-mug-hot cert-ico" aria-hidden="true"></i>
+              <header class="cert-info">
                 <h3>Java: trabalhando com lambdas, streams e Spring Framework</h3>
                 <p class="cert-meta">Alura · ago 2026</p>
-              </div>
+              </header>
               <span class="cert-pill">Alura</span>
             </article>
           </li>
+
           <li>
             <article class="cert">
-              <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
-              <div>
+              <i class="fa-solid fa-mug-hot cert-ico" aria-hidden="true"></i>
+              <header class="cert-info">
                 <h3>Java: consumindo API, gravando arquivos e lidando com erros</h3>
                 <p class="cert-meta">Alura · jul 2026</p>
-              </div>
+              </header>
               <span class="cert-pill">Alura</span>
             </article>
           </li>
+
           <li>
             <article class="cert">
-              <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
-              <div>
+              <i class="fa-solid fa-mug-hot cert-ico" aria-hidden="true"></i>
+              <header class="cert-info">
                 <h3>Java: trabalhando com listas e coleções de dados</h3>
                 <p class="cert-meta">Alura · jul 2026</p>
-              </div>
+              </header>
               <span class="cert-pill">Alura</span>
             </article>
           </li>
+
           <li>
             <article class="cert">
-              <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
-              <div>
+              <i class="fa-solid fa-mug-hot cert-ico" aria-hidden="true"></i>
+              <header class="cert-info">
                 <h3>Java: aplicando Orientação a Objetos</h3>
                 <p class="cert-meta">Alura · jul 2026</p>
-              </div>
+              </header>
               <span class="cert-pill">Alura</span>
             </article>
           </li>
+
           <li>
             <article class="cert">
-              <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
-              <div>
+              <i class="fa-solid fa-mug-hot cert-ico" aria-hidden="true"></i>
+              <header class="cert-info">
                 <h3>Java: criando a sua primeira aplicação</h3>
                 <p class="cert-meta">Alura · jul 2026</p>
-              </div>
+              </header>
               <span class="cert-pill">Alura</span>
             </article>
           </li>
+
           <li>
             <article class="cert">
-              <i class="fa-solid fa-network-wired" aria-hidden="true"></i>
-              <div>
+              <i class="fa-solid fa-network-wired cert-ico" aria-hidden="true"></i>
+              <header class="cert-info">
                 <h3>Redes e Protocolos: fundamentos da web</h3>
                 <p class="cert-meta">Alura · jul 2026</p>
-              </div>
+              </header>
               <span class="cert-pill">Alura</span>
             </article>
           </li>
+
           <li>
             <article class="cert">
-              <i class="fa-solid fa-brain" aria-hidden="true"></i>
-              <div>
+              <i class="fa-solid fa-brain cert-ico" aria-hidden="true"></i>
+              <header class="cert-info">
                 <h3>Pensamento computacional: fundamentos e lógica de programação</h3>
                 <p class="cert-meta">Alura · jul 2026</p>
-              </div>
+              </header>
               <span class="cert-pill">Alura</span>
             </article>
           </li>
         </ul>
-      </div>
+      </article>
     </section>
 
     <!-- CONTATO -->
     <section id="contato">
-      <div class="wrap">
+      <article class="wrap">
         <p class="sec-label">05 — contato</p>
         <h2>Vamos conversar?</h2>
-        <div class="contact-grid">
 
+        <article class="contact-grid">
           <!-- Formulário de contato -->
-          <div class="contact-form-wrap">
+          <section class="contact-form-wrap" aria-label="Formulário de contato">
             <form id="form-contato" novalidate>
-              <div class="form-group">
+              <section class="form-group">
                 <label for="nome">Nome</label>
                 <input type="text" id="nome" name="nome" required placeholder="Seu nome completo">
-              </div>
-              <div class="form-group">
+              </section>
+
+              <section class="form-group">
                 <label for="email">E-mail</label>
                 <input type="email" id="email" name="email" required placeholder="seu@email.com">
-              </div>
-              <div class="form-group">
+              </section>
+
+              <section class="form-group">
                 <label for="assunto">Assunto</label>
                 <select id="assunto" name="assunto">
                   <option value="">Selecione uma opção</option>
@@ -404,23 +457,31 @@
                   <option value="Dúvida técnica">Dúvida técnica</option>
                   <option value="Outro assunto">Outro assunto</option>
                 </select>
-              </div>
-              <div class="form-group">
+              </section>
+
+              <section class="form-group">
                 <label for="mensagem">Mensagem</label>
                 <textarea id="mensagem" name="mensagem" required rows="5" placeholder="Sua mensagem..."></textarea>
-              </div>
-              <button type="submit" class="btn btn-fill">Enviar mensagem ↗</button>
+              </section>
+
+              <button type="submit" class="btn btn-fill">
+                Enviar mensagem ↗
+              </button>
+
               <p class="form-note">
                 Ao enviar, a mensagem será preparada no seu aplicativo de e-mail.
                 Nenhum dado é armazenado neste site.
               </p>
             </form>
-          </div>
+          </section>
 
           <!-- Canais alternativos -->
           <aside class="contact-channels">
             <h3>Canais disponíveis</h3>
-            <p class="channels-sub">Se preferir, entre em contato diretamente por um destes canais.</p>
+            <p class="channels-sub">
+              Se preferir, entre em contato diretamente por um destes canais.
+            </p>
+
             <ul class="channel-list">
               <li>
                 <a href="mailto:luisguferreira2020@gmail.com" class="channel-item">
@@ -428,18 +489,21 @@
                   luisguferreira2020@gmail.com
                 </a>
               </li>
+
               <li>
                 <a href="https://www.linkedin.com/in/luisgmferreira/" target="_blank" rel="noopener" class="channel-item">
                   <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
                   LinkedIn ↗
                 </a>
               </li>
+
               <li>
                 <a href="https://ig.me/m/luisferreira_10" target="_blank" rel="noopener" class="channel-item">
                   <i class="fa-brands fa-instagram" aria-hidden="true"></i>
                   Instagram Direct ↗
                 </a>
               </li>
+
               <li>
                 <a href="https://github.com/luisferreiira" target="_blank" rel="noopener" class="channel-item">
                   <i class="fa-brands fa-github" aria-hidden="true"></i>
@@ -448,28 +512,26 @@
               </li>
             </ul>
           </aside>
-
-        </div>
-      </div>
+        </article>
+      </article>
     </section>
-
   </main>
+
+  <!-- BOTÃO FIXO DE VOLTAR AO TOPO -->
+  <a href="#hero" class="scroll-top" id="scroll-top" aria-label="Voltar ao topo">
+    <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+    <span>topo</span>
+  </a>
 
   <!-- RODAPÉ -->
   <footer>
-
-    <!-- Botão de voltar ao topo -->
-    <div class="footer-topo">
-      <a href="#hero" class="scroll-top" aria-label="Voltar ao topo">↑ topo</a>
-    </div>
-
-    <!-- Área principal: privacidade e mini menu -->
-    <div class="footer-main">
+    <section class="footer-main">
       <p class="footer-privacy">
         <strong>Privacidade e cookies:</strong> este site não utiliza cookies,
         rastreamento nem armazena dados pessoais. O contato é enviado pelo seu
         aplicativo de e-mail.
       </p>
+
       <nav class="footer-nav" aria-label="Menu do rodapé">
         <a href="#sobre">Sobre</a>
         <a href="#experiencia">Experiência</a>
@@ -477,33 +539,14 @@
         <a href="#habilidades">Habilidades</a>
         <a href="#contato">Contato</a>
       </nav>
-    </div>
+    </section>
 
-    <!-- Linha de copyright -->
-    <div class="footer-bottom">
-      <p> 2026 · Desenvolvido por <span>Luís Ferreira</span> ©</p>
-    </div>
-
+    <section class="footer-bottom">
+      <p>2026 · Desenvolvido por <span>Luís Ferreira</span> ©</p>
+    </section>
   </footer>
 
-  <script>
-    /* Efeito de fundo no header ao rolar a página */
-    const header = document.getElementById('site-header');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 24);
-    }, { passive: true });
-
-    /* Formulário de contato: abre o app de e-mail com os dados preenchidos */
-    document.getElementById('form-contato').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const nome    = document.getElementById('nome').value;
-      const email   = document.getElementById('email').value;
-      const assunto = document.getElementById('assunto').value || 'Contato pelo portfólio';
-      const msg     = document.getElementById('mensagem').value;
-      const corpo   = `Nome: ${nome}\nE-mail: ${email}\n\n${msg}`;
-      window.location.href = `mailto:seuemail@email.com?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
-    });
-  </script>
-
+  <!-- JAVASCRIPT PRINCIPAL -->
+  <script src="js/script.js"></script>
 </body>
 </html>

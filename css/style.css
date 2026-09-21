@@ -1,34 +1,33 @@
-/* ── TOKENS ─────────────────────────────────── */
-/* Variáveis globais reutilizáveis: cores, fontes e tamanhos */
 :root {
-  --bg:         #161616;
-  --surface:    #1f1f1f;
-  --surface-2:  #272727;
-  --border:     #2e2e2e;
-  --text:       #f2ede8;
-  --muted:      #787878;
-  --accent:     #d4a853;
+  --bg: #161616;
+  --surface: #1f1f1f;
+  --surface-2: #272727;
+  --border: #2e2e2e;
+  --text: #f2ede8;
+  --muted: #787878;
+  --accent: #d4a853;
   --accent-dim: rgba(212, 168, 83, 0.10);
-  --font-d:     'Space Grotesk', sans-serif;
-  --font-b:     'Inter', sans-serif;
-  --font-m:     'JetBrains Mono', monospace;
-  --max:        900px;
-  --r:          8px;
-  --ease:       0.22s ease;
+  --font-d: 'Space Grotesk', sans-serif;
+  --font-b: 'Inter', sans-serif;
+  --font-m: 'JetBrains Mono', monospace;
+  --max: 900px;
+  --r: 8px;
+  --ease: 0.22s ease;
 }
 
-/* ── RESET ───────────────────────────────────── */
-/* Remove margem e padding padrão do navegador de todos os elementos */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Rolagem suave ao clicar nos links de âncora do menu */
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
+}
 
-/* Configuração base da página: fundo escuro, fonte, tamanho e suavização de texto */
 body {
   background: var(--bg);
   color: var(--text);
@@ -38,28 +37,53 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Remove sublinhado dos links e herda a cor do elemento pai */
-a { color: inherit; text-decoration: none; }
+body.menu-open {
+  overflow: hidden;
+}
 
-/* Remove os marcadores padrão de todas as listas */
-ul { list-style: none; }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-/* ── LAYOUT ──────────────────────────────────── */
-/* Centraliza o conteúdo na página com largura máxima e espaçamento lateral */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/*  
+   LAYOUT
+     */
+
 .wrap {
   max-width: var(--max);
   margin: 0 auto;
   padding: 0 28px;
 }
 
-/* Espaçamento vertical interno de cada seção */
-section { padding: 100px 0; }
-/* Linha divisória entre seções consecutivas */
-section + section { border-top: 1px solid var(--border); }
+main > section {
+  padding: 100px 0;
+}
 
-/* ── HEADER / NAV ────────────────────────────── */
-/* Fixa o cabeçalho no topo da tela durante a rolagem */
-header {
+main > section + section {
+  border-top: 1px solid var(--border);
+}
+
+/*  
+   HEADER / NAV
+     */
+
+#site-header {
   position: fixed;
   inset: 0 0 auto;
   z-index: 99;
@@ -67,43 +91,40 @@ header {
   transition: background var(--ease), border-color var(--ease);
 }
 
-/* Fundo semitransparente com desfoque ao rolar a página (ativado via JS) */
-header.scrolled {
+#site-header.scrolled {
   background: rgba(22, 22, 22, 0.88);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-color: var(--border);
 }
 
-/* Alinha logo e links do menu horizontalmente com espaço entre eles */
-nav {
-  max-width: var(--max);
+.site-nav {
+  width: min(100%, var(--max));
+  height: 58px;
   margin: 0 auto;
   padding: 0 28px;
-  height: 58px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* Estilo do logo "lf.dev" no canto esquerdo do menu */
 .nav-logo {
   font-family: var(--font-m);
   font-size: 13px;
   color: var(--muted);
   transition: color var(--ease);
 }
-/* Logo muda para a cor de destaque ao passar o mouse */
-.nav-logo:hover { color: var(--accent); }
 
-/* Exibe os itens do menu em linha com espaçamento entre eles */
-nav ul {
+.nav-logo:hover {
+  color: var(--accent);
+}
+
+.main-menu {
   display: flex;
   gap: 36px;
 }
 
-/* Estilo base dos links do menu: fonte mono, cor discreta, com transição */
-nav ul li a {
+.main-menu li a {
   font-family: var(--font-m);
   font-size: 12px;
   display: flex;
@@ -115,20 +136,21 @@ nav ul li a {
   transition: color var(--ease);
 }
 
-/* Número do item (01, 02...) inicialmente invisível */
-nav ul li a .n {
+.main-menu li a .n {
   color: var(--accent);
   opacity: 0;
   transition: opacity var(--ease);
 }
 
-/* Ao passar o mouse: texto do link fica claro... */
-nav ul li a:hover { color: var(--text); }
-/* ...e o número do item aparece */
-nav ul li a:hover .n { opacity: 1; }
+.main-menu li a:hover {
+  color: var(--text);
+}
 
-/* Linha decorativa sob o link — inicia com largura zero (invisível) */
-nav ul li a::after {
+.main-menu li a:hover .n {
+  opacity: 1;
+}
+
+.main-menu li a::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -138,11 +160,35 @@ nav ul li a::after {
   background: var(--accent);
   transition: width var(--ease);
 }
-/* Linha se expande até o fim do link ao passar o mouse (efeito hover deslizante) */
-nav ul li a:hover::after { width: 100%; }
 
-/* ── SECTION LABEL & TITLE ───────────────────── */
-/* Rótulo pequeno acima do título de cada seção (ex: "01 — sobre") */
+.main-menu li a:hover::after {
+  width: 100%;
+}
+
+.menu-toggle {
+  display: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  width: 42px;
+  height: 38px;
+  border-radius: var(--r);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--ease), border-color var(--ease);
+}
+
+.menu-toggle:hover,
+.menu-toggle.is-open {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/*  
+   TÍTULOS DE SEÇÃO
+     */
+
 .sec-label {
   font-family: var(--font-m);
   font-size: 11px;
@@ -152,7 +198,6 @@ nav ul li a:hover::after { width: 100%; }
   margin-bottom: 12px;
 }
 
-/* Título principal de cada seção com tamanho responsivo */
 section h2 {
   font-family: var(--font-d);
   font-size: clamp(28px, 4vw, 38px);
@@ -161,8 +206,10 @@ section h2 {
   margin-bottom: 52px;
 }
 
-/* ── HERO ────────────────────────────────────── */
-/* Seção inicial ocupa toda a altura visível da tela */
+/*  
+   HERO
+     */
+
 #hero {
   min-height: 100vh;
   display: flex;
@@ -171,7 +218,6 @@ section h2 {
   border-top: none;
 }
 
-/* Texto "Olá, eu sou" acima do nome principal */
 #hero .hero-eyebrow {
   font-family: var(--font-m);
   font-size: 13px;
@@ -180,7 +226,6 @@ section h2 {
   margin-bottom: 22px;
 }
 
-/* Nome principal em tamanho grande e responsivo (cresce com a tela) */
 #hero h1 {
   font-family: var(--font-d);
   font-size: clamp(52px, 9vw, 88px);
@@ -190,7 +235,6 @@ section h2 {
   margin-bottom: 28px;
 }
 
-/* Cursor piscante ao lado do nome: barra vertical fina na cor de destaque */
 #hero h1 .cursor {
   display: inline-block;
   width: 3px;
@@ -202,13 +246,11 @@ section h2 {
   animation: blink 1.1s step-end infinite;
 }
 
-/* Animação do cursor piscando: alterna entre visível e invisível */
 @keyframes blink {
   0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+  50% { opacity: 0; }
 }
 
-/* Parágrafo de apresentação abaixo do nome */
 #hero .hero-desc {
   max-width: 520px;
   font-size: 18px;
@@ -217,13 +259,18 @@ section h2 {
   margin-bottom: 44px;
 }
 
-/* Palavras em <em> no parágrafo do hero ficam na cor clara (não itálico) */
-#hero .hero-desc em { color: var(--text); font-style: normal; }
+#hero .hero-desc em,
+#sobre em {
+  color: var(--text);
+  font-style: normal;
+}
 
-/* Agrupa os botões de ação em linha */
-.ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+.ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
 
-/* Estilo base dos botões: fonte, tamanho, borda arredondada e transição */
 .btn {
   font-family: var(--font-d);
   font-size: 14px;
@@ -232,29 +279,39 @@ section h2 {
   border-radius: var(--r);
   border: 1px solid transparent;
   transition: all var(--ease);
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
 }
 
-/* Botão primário: preenchido com a cor de destaque */
 .btn-fill {
   background: var(--accent);
   color: #111;
   border-color: var(--accent);
 }
-/* Botão primário fica mais claro e sobe levemente ao passar o mouse */
-.btn-fill:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
-/* Botão secundário: apenas borda, sem preenchimento */
+.btn-fill:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
 .btn-outline {
   background: transparent;
   color: var(--muted);
   border-color: var(--border);
 }
-/* Botão secundário clareia a borda e sobe levemente ao passar o mouse */
-.btn-outline:hover { color: var(--text); border-color: var(--muted); transform: translateY(-1px); }
 
-/* ── SOBRE ───────────────────────────────────── */
-/* Parágrafos da seção Sobre: cor discreta, tamanho confortável, largura limitada */
+.btn-outline:hover {
+  color: var(--text);
+  border-color: var(--muted);
+  transform: translateY(-1px);
+}
+
+/*  
+   SOBRE
+     */
+
 #sobre p {
   color: var(--muted);
   font-size: 17px;
@@ -262,25 +319,27 @@ section h2 {
   max-width: 660px;
 }
 
-/* Espaçamento entre parágrafos consecutivos na seção Sobre */
-#sobre p + p { margin-top: 18px; }
+#sobre p + p {
+  margin-top: 18px;
+}
 
-/* Palavras destacadas em <em> ficam na cor clara (sem itálico) */
-#sobre em { color: var(--text); font-style: normal; }
+#sobre .sec-label {
+  color: var(--accent);
+}
 
-/* Corrige a cor do rótulo de seção dentro de #sobre
-   (sem isso, o seletor "#sobre p" vencia por ter maior especificidade) */
-#sobre .sec-label { color: var(--accent); }
+/*  
+   EXPERIÊNCIA
+     */
 
-/* ── EXPERIÊNCIA ─────────────────────────────── */
-/* Lista de experiências em grid para permitir o layout de duas colunas */
-ul.exp-list { display: grid; }
+.exp-list {
+  display: grid;
+}
 
-/* Faz o <li> "desaparecer" do layout, deixando o <article> assumir o grid diretamente */
-ul.exp-list > li { display: contents; }
+.exp-list > li {
+  display: contents;
+}
 
-/* Layout de duas colunas: data à esquerda (130px) e conteúdo à direita */
-article.exp-item {
+.exp-item {
   display: grid;
   grid-template-columns: 130px 1fr;
   gap: 32px;
@@ -288,11 +347,11 @@ article.exp-item {
   border-top: 1px solid var(--border);
 }
 
-/* Adiciona borda inferior ao último item da experiência */
-article.exp-item:last-of-type { border-bottom: 1px solid var(--border); }
+.exp-list > li:last-child .exp-item {
+  border-bottom: 1px solid var(--border);
+}
 
-/* Período (data) da experiência em fonte mono e cor discreta */
-article.exp-item time {
+.exp-item time {
   font-family: var(--font-m);
   font-size: 12px;
   color: var(--muted);
@@ -301,15 +360,13 @@ article.exp-item time {
   display: block;
 }
 
-/* Cargo/título da posição na experiência */
-article.exp-item h3 {
+.exp-item h3 {
   font-family: var(--font-d);
   font-size: 17px;
   font-weight: 600;
   margin-bottom: 2px;
 }
 
-/* Nome da empresa em destaque com a cor de acento */
 .exp-company {
   font-size: 14px;
   color: var(--accent);
@@ -317,11 +374,12 @@ article.exp-item h3 {
   font-family: var(--font-m);
 }
 
-/* Lista de atividades realizadas na experiência */
-ul.exp-bullets { display: grid; gap: 8px; }
+.exp-bullets {
+  display: grid;
+  gap: 8px;
+}
 
-/* Cada atividade com espaço à esquerda para o ícone */
-ul.exp-bullets li {
+.exp-bullets li {
   font-size: 15px;
   color: var(--muted);
   padding-left: 18px;
@@ -329,8 +387,7 @@ ul.exp-bullets li {
   line-height: 1.65;
 }
 
-/* Ícone "▸" posicionado antes de cada atividade */
-ul.exp-bullets li::before {
+.exp-bullets li::before {
   content: '▸';
   position: absolute;
   left: 0;
@@ -339,10 +396,11 @@ ul.exp-bullets li::before {
   top: 3px;
 }
 
-/* ── PROJETOS ────────────────────────────────── */
+/*  
+   PROJETOS
+     */
 
-/* Card do projeto em destaque: borda esquerda colorida como marcador visual */
-article.proj-feat {
+.proj-feat {
   border: 1px solid var(--border);
   border-left: 3px solid var(--accent);
   border-radius: var(--r);
@@ -351,10 +409,11 @@ article.proj-feat {
   margin-bottom: 48px;
   transition: border-color var(--ease);
 }
-/* Borda do projeto em destaque fica totalmente colorida ao passar o mouse */
-article.proj-feat:hover { border-color: var(--accent); }
 
-/* Texto pequeno acima do título do projeto (tecnologias usadas) */
+.proj-feat:hover {
+  border-color: var(--accent);
+}
+
 .proj-overline {
   font-family: var(--font-m);
   font-size: 11px;
@@ -363,8 +422,7 @@ article.proj-feat:hover { border-color: var(--accent); }
   margin-bottom: 10px;
 }
 
-/* Título do projeto em destaque em tamanho maior */
-article.proj-feat h3 {
+.proj-feat h3 {
   font-family: var(--font-d);
   font-size: 28px;
   font-weight: 700;
@@ -372,7 +430,6 @@ article.proj-feat h3 {
   margin-bottom: 16px;
 }
 
-/* Descrição do projeto em cor discreta */
 .proj-desc {
   font-size: 15px;
   color: var(--muted);
@@ -381,16 +438,19 @@ article.proj-feat h3 {
   margin-bottom: 22px;
 }
 
-/* Tags de tecnologia do projeto em destaque dispostas em linha */
-ul.proj-tech {
+.proj-tech,
+.ps-tech {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.proj-tech {
   margin-bottom: 24px;
 }
 
-/* Cada tag de tecnologia com borda e fonte mono */
-ul.proj-tech li {
+.proj-tech li,
+.ps-tech li {
   font-family: var(--font-m);
   font-size: 11px;
   padding: 4px 10px;
@@ -399,7 +459,6 @@ ul.proj-tech li {
   color: var(--muted);
 }
 
-/* Link do GitHub em fonte mono e cor discreta */
 .proj-link {
   font-family: var(--font-m);
   font-size: 13px;
@@ -409,21 +468,22 @@ ul.proj-tech li {
   gap: 6px;
   transition: color var(--ease);
 }
-/* Link do GitHub muda para a cor de destaque ao passar o mouse */
-.proj-link:hover { color: var(--accent); }
 
-/* Grade responsiva de projetos menores: colunas se ajustam ao espaço disponível */
-ul.proj-small-grid {
+.proj-link:hover {
+  color: var(--accent);
+}
+
+.proj-small-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 18px;
 }
 
-/* Faz o <li> ocupar toda a altura da célula do grid */
-ul.proj-small-grid > li { display: flex; }
+.proj-small-grid > li {
+  display: flex;
+}
 
-/* Card de projeto menor: coluna flexível com fundo e borda */
-article.proj-small {
+.proj-small {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r);
@@ -434,11 +494,13 @@ article.proj-small {
   width: 100%;
   transition: border-color var(--ease), transform var(--ease);
 }
-/* Card sobe levemente e borda fica colorida ao passar o mouse */
-article.proj-small:hover { border-color: var(--accent); transform: translateY(-2px); }
 
-/* Reseta os estilos do <header> global dentro do card de projeto menor */
-article.proj-small header {
+.proj-small:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.proj-small header {
   position: static;
   background: none;
   border: none;
@@ -450,14 +512,12 @@ article.proj-small header {
   height: auto;
 }
 
-/* Título do projeto menor */
-article.proj-small h3 {
+.proj-small h3 {
   font-family: var(--font-d);
   font-size: 16px;
   font-weight: 600;
 }
 
-/* Badge "em andamento" com fundo semitransparente na cor de destaque */
 .ps-badge {
   font-family: var(--font-m);
   font-size: 10px;
@@ -469,7 +529,6 @@ article.proj-small h3 {
   white-space: nowrap;
 }
 
-/* Subtítulo com as tecnologias do projeto menor (ex: Dart · Flutter · Mobile) */
 .proj-small-sub {
   font-family: var(--font-m);
   font-size: 11px;
@@ -477,49 +536,35 @@ article.proj-small h3 {
   opacity: 0.8;
 }
 
-/* Descrição do projeto menor ocupa o espaço disponível no card */
-article.proj-small p {
+.proj-small p {
   font-size: 14px;
   color: var(--muted);
   line-height: 1.65;
   flex: 1;
 }
 
-/* Tags de tecnologia do projeto menor em linha */
-ul.ps-tech {
-  display: flex;
-  flex-wrap: wrap;
+.ps-tech {
   gap: 6px;
 }
 
-/* Cada tag de tecnologia do projeto menor */
-ul.ps-tech li {
-  font-family: var(--font-m);
-  font-size: 11px;
-  padding: 4px 10px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--muted);
-}
+/*  
+   HABILIDADES
+     */
 
-/* ── HABILIDADES ─────────────────────────────── */
-/* Grade de grupos de habilidades: colunas responsivas */
-ul.skills-cols {
+.skills-cols {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 18px;
 }
 
-/* Card de cada grupo de habilidades (Frontend, Programação...) */
-ul.skills-cols > li {
+.skills-cols > li {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r);
   padding: 22px;
 }
 
-/* Título do grupo de habilidades em fonte mono e maiúsculas */
-ul.skills-cols > li h3 {
+.skills-cols > li h3 {
   font-family: var(--font-m);
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -529,15 +574,13 @@ ul.skills-cols > li h3 {
   font-weight: 400;
 }
 
-/* Lista de habilidades individuais em linha com quebra automática */
-ul.sb-tags {
+.sb-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
 }
 
-/* Cada habilidade como tag com borda e fundo discreto */
-ul.sb-tags li {
+.sb-tags li {
   font-family: var(--font-m);
   font-size: 12px;
   color: var(--muted);
@@ -547,18 +590,26 @@ ul.sb-tags li {
   border-radius: 4px;
   transition: color var(--ease), border-color var(--ease);
 }
-/* Tag de habilidade clareia texto e borda ao passar o mouse */
-ul.sb-tags li:hover { color: var(--text); border-color: var(--muted); }
 
-/* ── CERTIFICAÇÕES ───────────────────────────── */
-/* Lista de certificações empilhadas verticalmente */
-ul.certs { display: grid; gap: 10px; }
+.sb-tags li:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
 
-/* Faz o <li> ocupar a largura total disponível */
-ul.certs > li { display: flex; }
+/*  
+   CERTIFICAÇÕES
+     */
 
-/* Card de certificação: ícone + informações + badge em linha */
-article.cert {
+.certs {
+  display: grid;
+  gap: 10px;
+}
+
+.certs > li {
+  display: flex;
+}
+
+.cert {
   display: flex;
   align-items: center;
   gap: 18px;
@@ -569,23 +620,27 @@ article.cert {
   width: 100%;
   transition: border-color var(--ease);
 }
-/* Borda do card de certificação muda para destaque ao passar o mouse */
-article.cert:hover { border-color: var(--accent); }
 
-/* Ícone emoji da certificação com tamanho fixo */
-.cert-ico { font-size: 17px; flex-shrink: 0; }
+.cert:hover {
+  border-color: var(--accent);
+}
 
-/* Bloco de texto (nome + data) ocupa todo o espaço restante */
-article.cert div { flex: 1; }
+.cert-ico {
+  font-size: 17px;
+  flex-shrink: 0;
+}
 
-/* Nome do curso certificado */
-article.cert h3 {
+.cert-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cert h3 {
   font-family: var(--font-d);
   font-size: 14.5px;
   font-weight: 500;
 }
 
-/* Plataforma e data de emissão da certificação */
 .cert-meta {
   font-family: var(--font-m);
   font-size: 12px;
@@ -593,7 +648,6 @@ article.cert h3 {
   margin-top: 2px;
 }
 
-/* Badge "Alura" à direita do card de certificação */
 .cert-pill {
   font-family: var(--font-m);
   font-size: 11px;
@@ -605,9 +659,10 @@ article.cert h3 {
   white-space: nowrap;
 }
 
-/* ── CONTATO ─────────────────────────────────── */
+/*  
+   CONTATO
+     */
 
-/* Layout da seção de contato em duas colunas: formulário à esquerda, canais à direita (CSS Grid) */
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -615,7 +670,6 @@ article.cert h3 {
   align-items: start;
 }
 
-/* Cada campo do formulário: label acima e input abaixo (CSS Flexbox) */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -623,7 +677,6 @@ article.cert h3 {
   margin-bottom: 18px;
 }
 
-/* Label do campo em fonte mono e cor discreta */
 .form-group label {
   font-family: var(--font-m);
   font-size: 12px;
@@ -631,7 +684,6 @@ article.cert h3 {
   letter-spacing: 0.05em;
 }
 
-/* Estilo base de inputs, select e textarea */
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -646,7 +698,6 @@ article.cert h3 {
   transition: border-color var(--ease);
 }
 
-/* Borda muda para a cor de destaque ao focar no campo */
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
@@ -654,25 +705,21 @@ article.cert h3 {
   border-color: var(--accent);
 }
 
-/* Remove a aparência padrão do select e adiciona cursor de ponteiro */
 .form-group select {
   appearance: none;
   cursor: pointer;
 }
 
-/* Textarea com altura mínima e redimensionável verticalmente */
 .form-group textarea {
   resize: vertical;
   min-height: 130px;
 }
 
-/* Cor do placeholder em todos os campos */
 .form-group ::placeholder {
   color: var(--muted);
   opacity: 0.6;
 }
 
-/* Nota informativa abaixo do botão de envio */
 .form-note {
   font-family: var(--font-m);
   font-size: 11px;
@@ -681,7 +728,6 @@ article.cert h3 {
   line-height: 1.7;
 }
 
-/* Título da coluna de canais alternativos */
 .contact-channels h3 {
   font-family: var(--font-d);
   font-size: 20px;
@@ -689,21 +735,18 @@ article.cert h3 {
   margin-bottom: 8px;
 }
 
-/* Subtítulo dos canais em cor discreta */
 .channels-sub {
   font-size: 14px;
   color: var(--muted);
   margin-bottom: 22px;
 }
 
-/* Lista de canais empilhada verticalmente (CSS Flexbox) */
-ul.channel-list {
+.channel-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* Card de canal: ícone + texto em linha (CSS Flexbox) */
 .channel-item {
   display: flex;
   align-items: center;
@@ -717,52 +760,68 @@ ul.channel-list {
   transition: border-color var(--ease), color var(--ease);
 }
 
-/* Card de canal muda borda e cor ao passar o mouse */
 .channel-item:hover {
   border-color: var(--accent);
   color: var(--text);
 }
 
-/* Ícone emoji do canal */
-.channel-item span,
-.channel-item i { font-size: 18px; }
-
-/* ── FOOTER ──────────────────────────────────── */
-
-/* Linha separadora no topo do rodapé */
-footer { border-top: 1px solid var(--border); }
-
-/* Área do botão de voltar ao topo: alinhado à direita */
-.footer-topo {
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px 28px;
-  border-bottom: 1px solid var(--border);
-  max-width: var(--max);
-  margin: 0 auto;
+.channel-item i {
+  font-size: 18px;
 }
 
-/* Botão de voltar ao topo em fonte mono com borda e transição */
+/*  
+   BOTÃO FIXO VOLTAR AO TOPO
+     */
+
 .scroll-top {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 98;
   font-family: var(--font-m);
   font-size: 13px;
   color: var(--muted);
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
+  gap: 7px;
+  padding: 10px 15px;
+  background: rgba(31, 31, 31, 0.92);
   border: 1px solid var(--border);
   border-radius: var(--r);
-  transition: color var(--ease), border-color var(--ease);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition:
+    opacity var(--ease),
+    visibility var(--ease),
+    transform var(--ease),
+    color var(--ease),
+    border-color var(--ease);
 }
 
-/* Botão de topo muda cor e borda ao passar o mouse */
+.scroll-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
 .scroll-top:hover {
   color: var(--accent);
   border-color: var(--accent);
 }
 
-/* Área principal do rodapé: privacidade à esquerda e mini menu à direita (CSS Grid) */
+/*  
+   FOOTER
+     */
+
+footer {
+  border-top: 1px solid var(--border);
+}
+
 .footer-main {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -773,7 +832,6 @@ footer { border-top: 1px solid var(--border); }
   margin: 0 auto;
 }
 
-/* Texto de privacidade e LGPD */
 .footer-privacy {
   font-family: var(--font-m);
   font-size: 12px;
@@ -782,30 +840,19 @@ footer { border-top: 1px solid var(--border); }
   max-width: 520px;
 }
 
-/* Destaque em negrito no texto de privacidade */
 .footer-privacy strong {
   color: var(--text);
   font-weight: 500;
 }
 
-/* Link de e-mail dentro do texto de privacidade */
-.footer-privacy a {
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Mini menu do rodapé: links empilhados verticalmente e alinhados à direita */
 .footer-nav {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   gap: 10px 18px;
   align-items: center;
   justify-content: flex-end;
 }
 
-/* Links do mini menu em fonte mono e cor discreta */
 .footer-nav a {
   font-family: var(--font-m);
   font-size: 12px;
@@ -813,10 +860,10 @@ footer { border-top: 1px solid var(--border); }
   transition: color var(--ease);
 }
 
-/* Link do mini menu muda para destaque ao passar o mouse */
-.footer-nav a:hover { color: var(--accent); }
+.footer-nav a:hover {
+  color: var(--accent);
+}
 
-/* Linha de copyright centralizada com borda superior */
 .footer-bottom {
   border-top: 1px solid var(--border);
   padding: 18px 28px;
@@ -826,38 +873,106 @@ footer { border-top: 1px solid var(--border); }
   margin: 0 auto;
 }
 
-/* Texto de copyright em fonte mono e cor discreta */
 .footer-bottom p {
   font-family: var(--font-m);
   font-size: 12px;
   color: var(--muted);
 }
 
-/* Destaca o nome no copyright com a cor de acento */
-.footer-bottom span { color: var(--accent); }
+.footer-bottom span {
+  color: var(--accent);
+}
 
-/* ── RESPONSIVO ──────────────────────────────── */
-/* Ajustes para telas menores (celular, até 680px) */
+/*  
+   RESPONSIVO
+     */
+
 @media (max-width: 680px) {
-  nav ul {
-    display: none;
+  .site-nav {
+    position: relative;
   }
 
-  section {
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .main-menu {
+    position: absolute;
+    top: 58px;
+    left: 14px;
+    right: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px;
+    background: rgba(31, 31, 31, 0.98);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity var(--ease), visibility var(--ease), transform var(--ease);
+  }
+
+  .main-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .main-menu li a {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .main-menu li a .n {
+    opacity: 1;
+  }
+
+  main > section {
     padding: 72px 0;
   }
 
-  article.proj-feat {
-    grid-template-columns: 1fr;
+  .wrap {
+    padding: 0 20px;
   }
 
-  article.exp-item {
+  #hero h1 {
+    font-size: clamp(48px, 14vw, 70px);
+  }
+
+  #hero .hero-desc {
+    font-size: 16px;
+  }
+
+  .ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ctas .btn {
+    justify-content: center;
+  }
+
+  .exp-item {
     grid-template-columns: 1fr;
     gap: 8px;
   }
 
-  ul.skills-cols {
+  .proj-feat {
+    padding: 28px 24px;
+  }
+
+  .skills-cols {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .cert {
+    gap: 12px;
   }
 
   .cert-pill {
@@ -872,9 +987,49 @@ footer { border-top: 1px solid var(--border); }
   .footer-main {
     grid-template-columns: 1fr;
     gap: 24px;
+    padding: 28px 20px;
   }
 
   .footer-nav {
-    justify-content: center;
+    justify-content: flex-start;
+  }
+
+  .footer-bottom {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .scroll-top {
+    right: 16px;
+    bottom: 16px;
+    padding: 10px 13px;
+  }
+}
+
+@media (max-width: 430px) {
+  .skills-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .proj-small-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-logo {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
